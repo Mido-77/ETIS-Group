@@ -52,11 +52,11 @@ didn't install correctly, ask in the group chat.
 ## 2. Clone the project
 
 ```
-git clone https://github.com/Mido-77/ETIS.git
-cd ETIS
+git clone https://github.com/Mido-77/ETIS-Group.git
+cd ETIS-Group
 ```
 
-**Everything below assumes your terminal stays at this project root (`ETIS/`) unless a
+**Everything below assumes your terminal stays at this project root (`ETIS-Group/`) unless a
 step explicitly tells you to `cd` somewhere else.** This matters — see the `.env` note in
 step 4.
 
@@ -103,7 +103,7 @@ minutes and a few GB of disk — that's expected, not a sign anything's wrong.
 
 ## 4. Set up environment variables
 
-**Important:** the `.env` file must live at the **project root** (`ETIS/.env`), NOT inside
+**Important:** the `.env` file must live at the **project root** (`ETIS-Group/.env`), NOT inside
 `backend/`. `app/core/database.py` specifically loads it from the project root regardless
 of which folder you run commands from — if `.env` ends up in `backend/.env` instead, the
 app won't error, it'll just silently fall back to a default database URL and you'll get a
@@ -148,7 +148,7 @@ activated:
 python data/scripts/seed_database.py
 ```
 
-Run this **from the project root** (`ETIS/`), not from inside `backend/` — if you're
+Run this **from the project root** (`ETIS-Group/`), not from inside `backend/` — if you're
 still in `backend/` from step 3, run `cd ..` first, then `cd backend` afterward to
 continue to step 6.
 
@@ -192,7 +192,7 @@ python -m pytest
 
 **This takes several minutes (5–6 minutes is normal)** — most of that time is the LSTM
 model loading and running inference on CPU during the risk-scoring tests, not a hang.
-You should see `59 passed`. If tests get skipped with a message like "Database not
+Confirm that all tests pass. The number of tests may change as the project evolves. If tests get skipped with a message like "Database not
 seeded," go back and re-run step 5.
 
 ---
@@ -254,7 +254,7 @@ If any of this fails, see "Common issues" below.
 - **Everything scores 0 / Threat Feed and Stats are empty** → the database wasn't seeded.
   Go back to step 5 and run the seeding scripts.
 - **Backend can't connect to the database, or connects to the wrong one** → check that
-  `.env` is at the project root (`ETIS/.env`), not inside `backend/`. See step 4.
+  `.env` is at the project root (`ETIS-Group/.env`), not inside `backend/`. See step 4.
 - **`docker: command not found` or Docker errors** → Docker isn't required for this guide;
   ignore unless you're specifically trying to deploy the containerized version.
 - **`psql` not recognized** → close and reopen your terminal, or re-check that "Command
