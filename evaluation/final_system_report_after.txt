@@ -1,0 +1,134 @@
+ETIS final-system evaluation: current decision-tier scorer, TEST split
+(training-split-only blacklist; synthetic rows excluded; Wilson 95% CIs in brackets)
+rows scored: 13,914   rows that errored (excluded): 0
+
+======================================================================
+URL SUBMISSIONS
+======================================================================
+group_type counts (blank = no group): {'host': 9823, 'shared_platform': 3816}
+
+-- URLs, TEST, all --
+                 LOW  MEDIUM    HIGH   (row %)
+phishing        4.3%   18.5%   77.2%   (n=9,491)
+legitimate     99.1%    0.9%    0.0%   (n=4,148)
+
+-- URLs, TEST, all  (phishing n=9,491, legitimate n=4,148) --
+  flagged MEDIUM or HIGH   recall  95.7% [95.2,  96.1] (9,080/9,491)
+                           FPR      0.9% [ 0.6,   1.2] (37/4,148)   precision  99.6%
+  flagged HIGH only        recall  77.2% [76.3,  78.0] (7,324/9,491)
+                           FPR      0.0% [ 0.0,   0.1] (0/4,148)   precision 100.0%
+
+-- URLs, TEST, UNSEEN-HOST (group_type == 'host')  (phishing n=5,676, legitimate n=4,147) --
+  flagged MEDIUM or HIGH   recall  92.8% [92.1,  93.4] (5,266/5,676)
+                           FPR      0.9% [ 0.6,   1.2] (37/4,147)   precision  99.3%
+  flagged HIGH only        recall  66.2% [65.0,  67.5] (3,760/5,676)
+                           FPR      0.0% [ 0.0,   0.1] (0/4,147)   precision 100.0%
+
+-- URLs, UNSEEN-HOST, with a path  (phishing n=2,402, legitimate n=1,219) --
+  flagged MEDIUM or HIGH   recall  87.9% [86.6,  89.2] (2,112/2,402)
+                           FPR      2.8% [ 2.0,   3.9] (34/1,219)   precision  98.4%
+  flagged HIGH only        recall  51.1% [49.1,  53.1] (1,228/2,402)
+                           FPR      0.0% [ 0.0,   0.3] (0/1,219)   precision 100.0%
+
+-- URLs, UNSEEN-HOST, no path (bare host)  (phishing n=3,274, legitimate n=2,928) --
+  flagged MEDIUM or HIGH   recall  96.3% [95.6,  96.9] (3,154/3,274)
+                           FPR      0.1% [ 0.0,   0.3] (3/2,928)   precision  99.9%
+  flagged HIGH only        recall  77.3% [75.9,  78.7] (2,532/3,274)
+                           FPR      0.0% [ 0.0,   0.1] (0/2,928)   precision 100.0%
+
+-- URLs, group_type == 'shared_platform'  (report separately)  (phishing n=3,815, legitimate n=1) --
+  flagged MEDIUM or HIGH   recall 100.0% [99.9, 100.0] (3,814/3,815)
+                           FPR      0.0% [ 0.0,  79.3] (0/1)   precision 100.0%
+  flagged HIGH only        recall  93.4% [92.6,  94.2] (3,564/3,815)
+                           FPR      0.0% [ 0.0,  79.3] (0/1)   precision 100.0%
+
+-- Legitimate URLs only: false-positive rate by source, and .eg domains --
+  source=crawl_legit_paths      FPR   2.8% [ 2.0,   3.9] (34/1,219)   HIGH   0.0% [ 0.0,   0.3] (0/1,219)
+  source=manual                 FPR   0.0% [ 0.0,  39.0] (0/6)   HIGH   0.0% [ 0.0,  39.0] (0/6)
+  source=tranco                 FPR   0.1% [ 0.0,   0.3] (3/2,923)   HIGH   0.0% [ 0.0,   0.1] (0/2,923)
+  .eg hosts                    FPR   0.0% [ 0.0,   1.5] (0/255)
+  allowlisted (verified brand)   0.8% [ 0.6,   1.1] (33/4,148) of legitimate rows
+
+-- Each engine ALONE (tier >= MEDIUM among rows where the engine applied) --
+  rule_based  recall   0.2% [ 0.1,   0.3] (15/9,491)
+              FPR      0.1% [ 0.0,   0.2] (3/4,148)
+  blacklist   recall   2.2% [ 1.9,   2.5] (208/9,491)
+              FPR      0.0% [ 0.0,   0.1] (0/4,148)
+  url_model   recall  95.6% [95.2,  96.0] (9,078/9,491)
+              FPR      0.8% [ 0.6,   1.1] (34/4,148)
+
+-- Which engine DECIDED the verdict (flagged rows only) --
+  phishing    url_model=8,987, blacklist=91, rule_based=2
+  legitimate  url_model=34, rule_based=3
+
+======================================================================
+TEXT / EMAIL SUBMISSIONS
+======================================================================
+small sample: 275 rows; interpret intervals, not point estimates
+
+-- TEXT, TEST, all --
+                 LOW  MEDIUM    HIGH   (row %)
+phishing        3.7%   12.2%   84.1%   (n=82)
+legitimate     93.8%    6.2%    0.0%   (n=193)
+
+-- TEXT, TEST, all  (phishing n=82, legitimate n=193) --
+  flagged MEDIUM or HIGH   recall  96.3% [89.8,  98.7] (79/82)
+                           FPR      6.2% [ 3.6,  10.6] (12/193)   precision  86.8%
+  flagged HIGH only        recall  84.1% [74.7,  90.5] (69/82)
+                           FPR      0.0% [ 0.0,   2.0] (0/193)   precision 100.0%
+
+-- TEXT, language == ar  (phishing n=62, legitimate n=177) --
+  flagged MEDIUM or HIGH   recall  95.2% [86.7,  98.3] (59/62)
+                           FPR      6.8% [ 3.9,  11.5] (12/177)   precision  83.1%
+  flagged HIGH only        recall  80.6% [69.1,  88.6] (50/62)
+                           FPR      0.0% [ 0.0,   2.1] (0/177)   precision 100.0%
+
+-- TEXT, language == mixed  (phishing n=20, legitimate n=16) --
+  flagged MEDIUM or HIGH   recall 100.0% [83.9, 100.0] (20/20)
+                           FPR      0.0% [ 0.0,  19.4] (0/16)   precision 100.0%
+  flagged HIGH only        recall  95.0% [76.4,  99.1] (19/20)
+                           FPR      0.0% [ 0.0,  19.4] (0/16)   precision 100.0%
+
+-- TEXT, source == github_arabic_text_spam_detection  (phishing n=4, legitimate n=7) --
+  flagged MEDIUM or HIGH   recall 100.0% [51.0, 100.0] (4/4)
+                           FPR     57.1% [25.0,  84.2] (4/7)   precision  50.0%
+  flagged HIGH only        recall  50.0% [15.0,  85.0] (2/4)
+                           FPR      0.0% [ 0.0,  35.4] (0/7)   precision 100.0%
+
+-- TEXT, source == kaggle_arabic_phishing_fully_dataset  (phishing n=31, legitimate n=154) --
+  flagged MEDIUM or HIGH   recall 100.0% [89.0, 100.0] (31/31)
+                           FPR      4.5% [ 2.2,   9.1] (7/154)   precision  81.6%
+  flagged HIGH only        recall  93.5% [79.3,  98.2] (29/31)
+                           FPR      0.0% [ 0.0,   2.4] (0/154)   precision 100.0%
+
+-- TEXT, source == kaggle_dialectal_arabic_sms  (phishing n=20, legitimate n=16) --
+  flagged MEDIUM or HIGH   recall 100.0% [83.9, 100.0] (20/20)
+                           FPR      0.0% [ 0.0,  19.4] (0/16)   precision 100.0%
+  flagged HIGH only        recall  95.0% [76.4,  99.1] (19/20)
+                           FPR      0.0% [ 0.0,  19.4] (0/16)   precision 100.0%
+
+-- TEXT, source == salloum_gaber_bilingual_corpus  (phishing n=27, legitimate n=16) --
+  flagged MEDIUM or HIGH   recall  88.9% [71.9,  96.1] (24/27)
+                           FPR      6.2% [ 1.1,  28.3] (1/16)   precision  96.0%
+  flagged HIGH only        recall  70.4% [51.5,  84.1] (19/27)
+                           FPR      0.0% [ 0.0,  19.4] (0/16)   precision 100.0%
+
+-- Each engine ALONE (tier >= MEDIUM among rows where the engine applied) --
+  rule_based  recall  30.5% [21.6,  41.1] (25/82)
+              FPR      0.5% [ 0.1,   2.9] (1/193)
+  text_model  recall  96.3% [89.8,  98.7] (79/82)
+              FPR      5.7% [ 3.2,   9.9] (11/193)
+
+-- Which engine DECIDED the verdict (flagged rows only) --
+  phishing    text_model=78, rule_based=1
+  legitimate  text_model=11, rule_based=1
+
+======================================================================
+LIMITS TO STATE WITH THESE NUMBERS
+======================================================================
+- Blacklist: the evaluation database knows only training-split URLs, so its value on
+  already-known threats is NOT measured here.
+- Legitimate URLs are Tranco top-20k plus crawled pages: precision on obscure legitimate
+  sites is unmeasured. Shared-platform URLs are a separate group above.
+- The text test set is small and mostly translated/short messages; see the intervals.
+- No threshold was tuned on this split; the tier thresholds came from validation data.

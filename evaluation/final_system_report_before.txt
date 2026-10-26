@@ -1,0 +1,72 @@
+ETIS final-system evaluation: current decision-tier scorer, TEST split
+(training-split-only blacklist; synthetic rows excluded; Wilson 95% CIs in brackets)
+rows scored: 13,639   rows that errored (excluded): 0
+
+======================================================================
+URL SUBMISSIONS
+======================================================================
+group_type counts (blank = no group): {'host': 9823, 'shared_platform': 3816}
+
+-- URLs, TEST, all --
+                 LOW  MEDIUM    HIGH   (row %)
+phishing        4.3%   18.5%   77.2%   (n=9,491)
+legitimate     99.0%    1.0%    0.0%   (n=4,148)
+
+-- URLs, TEST, all  (phishing n=9,491, legitimate n=4,148) --
+  flagged MEDIUM or HIGH   recall  95.7% [95.2,  96.1] (9,080/9,491)
+                           FPR      1.0% [ 0.7,   1.3] (41/4,148)   precision  99.6%
+  flagged HIGH only        recall  77.2% [76.3,  78.0] (7,324/9,491)
+                           FPR      0.0% [ 0.0,   0.1] (0/4,148)   precision 100.0%
+
+-- URLs, TEST, UNSEEN-HOST (group_type == 'host')  (phishing n=5,676, legitimate n=4,147) --
+  flagged MEDIUM or HIGH   recall  92.8% [92.1,  93.4] (5,266/5,676)
+                           FPR      1.0% [ 0.7,   1.3] (41/4,147)   precision  99.2%
+  flagged HIGH only        recall  66.2% [65.0,  67.5] (3,760/5,676)
+                           FPR      0.0% [ 0.0,   0.1] (0/4,147)   precision 100.0%
+
+-- URLs, UNSEEN-HOST, with a path  (phishing n=2,402, legitimate n=1,219) --
+  flagged MEDIUM or HIGH   recall  87.9% [86.6,  89.2] (2,112/2,402)
+                           FPR      2.8% [ 2.0,   3.9] (34/1,219)   precision  98.4%
+  flagged HIGH only        recall  51.1% [49.1,  53.1] (1,228/2,402)
+                           FPR      0.0% [ 0.0,   0.3] (0/1,219)   precision 100.0%
+
+-- URLs, UNSEEN-HOST, no path (bare host)  (phishing n=3,274, legitimate n=2,928) --
+  flagged MEDIUM or HIGH   recall  96.3% [95.6,  96.9] (3,154/3,274)
+                           FPR      0.2% [ 0.1,   0.5] (7/2,928)   precision  99.8%
+  flagged HIGH only        recall  77.3% [75.9,  78.7] (2,532/3,274)
+                           FPR      0.0% [ 0.0,   0.1] (0/2,928)   precision 100.0%
+
+-- URLs, group_type == 'shared_platform'  (report separately)  (phishing n=3,815, legitimate n=1) --
+  flagged MEDIUM or HIGH   recall 100.0% [99.9, 100.0] (3,814/3,815)
+                           FPR      0.0% [ 0.0,  79.3] (0/1)   precision 100.0%
+  flagged HIGH only        recall  93.4% [92.6,  94.2] (3,564/3,815)
+                           FPR      0.0% [ 0.0,  79.3] (0/1)   precision 100.0%
+
+-- Legitimate URLs only: false-positive rate by source, and .eg domains --
+  source=crawl_legit_paths      FPR   2.8% [ 2.0,   3.9] (34/1,219)   HIGH   0.0% [ 0.0,   0.3] (0/1,219)
+  source=manual                 FPR   0.0% [ 0.0,  39.0] (0/6)   HIGH   0.0% [ 0.0,  39.0] (0/6)
+  source=tranco                 FPR   0.2% [ 0.1,   0.5] (7/2,923)   HIGH   0.0% [ 0.0,   0.1] (0/2,923)
+  .eg hosts                    FPR   0.0% [ 0.0,   1.5] (0/255)
+  allowlisted (verified brand)   0.8% [ 0.6,   1.1] (33/4,148) of legitimate rows
+
+-- Each engine ALONE (tier >= MEDIUM among rows where the engine applied) --
+  rule_based  recall   0.2% [ 0.1,   0.3] (15/9,491)
+              FPR      0.2% [ 0.1,   0.3] (7/4,148)
+  blacklist   recall   2.2% [ 1.9,   2.5] (208/9,491)
+              FPR      0.0% [ 0.0,   0.1] (0/4,148)
+  url_model   recall  95.6% [95.2,  96.0] (9,078/9,491)
+              FPR      0.8% [ 0.6,   1.1] (34/4,148)
+
+-- Which engine DECIDED the verdict (flagged rows only) --
+  phishing    url_model=8,987, blacklist=91, rule_based=2
+  legitimate  url_model=34, rule_based=7
+
+======================================================================
+LIMITS TO STATE WITH THESE NUMBERS
+======================================================================
+- Blacklist: the evaluation database knows only training-split URLs, so its value on
+  already-known threats is NOT measured here.
+- Legitimate URLs are Tranco top-20k plus crawled pages: precision on obscure legitimate
+  sites is unmeasured. Shared-platform URLs are a separate group above.
+- The text test set is small and mostly translated/short messages; see the intervals.
+- No threshold was tuned on this split; the tier thresholds came from validation data.

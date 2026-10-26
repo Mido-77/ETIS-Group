@@ -1,0 +1,102 @@
+ETIS Egyptian-brand typosquat benchmark (final system)
+typosquat URLs: 1,060   genuine own-domain URLs (constructed): 260   errors excluded: 0
+
+== Genuine controls: must NOT be flagged ==
+flagged >= MEDIUM: 0.0% [0.0, 1.5]  (0/260)
+flagged  = HIGH  : 0.0% [0.0, 1.5]  (0/260)
+allowlisted      : 100.0% [98.5, 100.0]  (260/260)
+
+== Typosquats: overall ==
+flagged >= MEDIUM: 80.3% [77.8, 82.6]  (851/1060)
+flagged  = HIGH  : 22.1% [19.7, 24.7]  (234/1060)
+
+== Typosquats by technique  (share flagged >= MEDIUM; 'rule' / 'url_model' = that engine alone) ==
+technique               n   system     HIGH     rule  url_model   either  note
+alias_variant          80    28.8%     0.0%     8.8%      25.0%    28.8%  NOT a built-in rule
+brand_subdomain        80    95.0%     6.2%    72.5%      77.5%    95.0%  NOT a built-in rule
+combo_prefix           80    70.0%    12.5%    52.5%      48.8%    70.0%  NOT a built-in rule
+combo_suffix           80    81.2%     2.5%    56.2%      61.2%    81.2%  NOT a built-in rule
+digit_lookalike        55    90.9%     0.0%    89.1%      16.4%    90.9%  designed-for (partly circular)
+embedding              80   100.0%   100.0%   100.0%      53.8%   100.0%  designed-for (partly circular)
+homoglyph_unicode      51   100.0%   100.0%   100.0%       7.8%   100.0%  designed-for (partly circular)
+hyphen_insertion       51    96.1%     0.0%    96.1%      25.5%    96.1%  NOT a built-in rule
+keyboard_adjacent      68    91.2%     0.0%    88.2%       7.4%    91.2%  NOT a built-in rule
+omission               66    92.4%     0.0%    90.9%       7.6%    92.4%  designed-for (partly circular)
+path_embedding         80    55.0%     6.2%     0.0%      55.0%    55.0%  NOT a built-in rule
+repetition             66    90.9%     0.0%    90.9%       7.6%    90.9%  designed-for (partly circular)
+tld_swap               80    43.8%     1.2%    26.2%      26.2%    43.8%  NOT a built-in rule
+transposition          63    93.7%     0.0%    93.7%      15.9%    93.7%  designed-for (partly circular)
+userinfo_trick         80   100.0%   100.0%   100.0%      72.5%   100.0%  designed-for (partly circular)
+
+== Typosquats by brand (share flagged >= MEDIUM) ==
+  Amazon Egypt                               82.5%  (n=57)
+  Arab African International Bank            57.7%  (n=52)
+  Banque Misr                                94.9%  (n=59)
+  Breadfast                                  91.5%  (n=59)
+  Commercial International Bank (CIB)        94.6%  (n=56)
+  Egypt e-Government portal                  79.7%  (n=59)
+  EgyptAir                                   86.4%  (n=59)
+  Etisalat Misr (e&)                         78.6%  (n=112)
+  Fawry                                      83.0%  (n=53)
+  Instapay                                   81.7%  (n=60)
+  Jumia Egypt                                77.8%  (n=54)
+  National Bank of Egypt (NBE)               53.1%  (n=32)
+  Noon Egypt                                 59.2%  (n=49)
+  Orange Egypt                               80.7%  (n=57)
+  QNB Al Ahli                                83.5%  (n=91)
+  Talabat Egypt                              89.8%  (n=59)
+  Telecom Egypt (WE)                         68.8%  (n=32)
+  Vodafone Egypt                             78.3%  (n=60)
+
+== Misses (verdict LOW): up to 3 per technique ==
+  alias_variant (57 missed)
+      https://cib-egypt.com
+      https://nbe-egypt.com
+      http://nbe-egypt.net/secure/signin
+  brand_subdomain (4 missed)
+      https://nbe.verify-egypt.xyz
+      https://qnbalahli.online-egypt.net
+      https://te.support-app.net
+  combo_prefix (24 missed)
+      https://support-nbe.org
+      https://eg-nbe.net/support/refund
+      https://secure-nbe.net
+  combo_suffix (15 missed)
+      http://nbe-online.org/secure/signin
+      http://nbe-eg.com
+      http://qnbalahli-app.org
+  digit_lookalike (5 missed)
+      https://aai8.com/secure/signin
+      http://4aib.com
+      https://a4ib.com/account/update
+  hyphen_insertion (2 missed)
+      https://aa-ib.com
+      https://no-on.com
+  keyboard_adjacent (6 missed)
+      https://zaib.com/account/update
+      https://aaub.com/secure/signin
+      https://aaob.com
+  omission (5 missed)
+      http://aab.com/secure/signin
+      https://aib.com/support/refund
+      https://oon.com/account/update
+  path_embedding (36 missed)
+      https://v1i07e87im.net/nbe.com.eg/login
+      https://5uil9v2qi.click/nbe.com.eg/login
+      https://zrjplcj3t.site/nbe.com.eg/login
+  repetition (6 missed)
+      https://aaaib.com
+      http://aaiib.com/wallet/activate
+      https://aaibb.com
+  tld_swap (45 missed)
+      https://cibeg.info
+      https://cibeg.org
+      https://nbe.com
+  transposition (4 missed)
+      http://aabi.com
+      https://aiab.com/account/update
+      http://nono.com/wallet/activate
+
+Reading guide: report the per-technique table. 'NOT a built-in rule' rows are the real
+measure; 'designed-for' rows partly test whether the rule engine does what it was built to do.
+The genuine rows are constructed URLs, not crawled.

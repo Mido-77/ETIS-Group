@@ -1,0 +1,3 @@
+text,label,category,channel,language,brand,contributor,received_in_real_life
+"بنك مصر: تم خصم مبلغ 320.00 جنيه من حسابكم المنتهي بـ XXXX. للاستفسار اتصل بالخط الساخن.",legitimate,bank_notification,sms,ar,Banque Misr,AB,yes
+"كود التحقق الخاص بك هو 482915. لا تشاركه مع أحد.",legitimate,otp,sms,ar,,AB,yes

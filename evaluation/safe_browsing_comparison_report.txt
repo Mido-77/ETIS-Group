@@ -1,0 +1,31 @@
+ETIS -- Google Safe Browsing Commercial-Tool Comparison
+Test-split URL rows evaluated: 12702
+
+Accuracy:  0.2902
+Precision: 0.9987
+Recall:    0.0768
+F1:        0.1426
+ROC-AUC:   not computable (binary match only, no continuous score)
+
+Confusion matrix [[TN,FP],[FN,TP]]:
+[[2936    1]
+ [9015  750]]
+
+Total flagged by Safe Browsing: 750 / 12702
+
+======================================================================
+METHODOLOGY NOTES -- carry into Chapter 5.3/6.3, do not omit:
+- Safe Browsing returns a binary known-bad match, not a probability;
+  ROC-AUC is not applicable here, unlike ETIS's own 0-100 scores.
+- A 'no match' result means the URL is not in Google's disclosed
+  known-threat database at query time, not that it is verified safe.
+  This is the same absence-is-not-evidence-of-safety caveat that
+  applies to ETIS's own blacklist engine.
+- Safe Browsing's matching criteria/database coverage are not
+  publicly disclosed, so this is a black-box comparison -- reported
+  as an external reference point, not a methodology audit.
+- Recall here reflects Safe Browsing's coverage of THIS SPECIFIC
+  test set (largely PhishTank/OpenPhish-sourced), which Safe
+  Browsing itself may partially ingest as a data source -- treat
+  as an upper-bound estimate of real-world novel-threat recall,
+  similar in spirit to ETIS's own blacklist-leakage caveat.

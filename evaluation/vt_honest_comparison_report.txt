@@ -1,0 +1,57 @@
+ETIS vs VirusTotal on a FRESH unseen-host sample (current test split)
+sample: 100 phishing + 100 legitimate URLs (one URL per host; shared-platform rows excluded); ETIS scoring errors excluded: 0
+ETIS scored against etis_eval (blacklist seeded from the TRAIN split only). Intervals: Wilson 95%.
+
+== Operating points (pre-declared) ==
+tool / threshold                                    recall (phishing flagged)             false-positive rate (legit flagged)
+ETIS  MEDIUM or HIGH   (pre-declared primary)        94.0% [87.5,  97.2]  (94/100)          1.0% [ 0.2,   5.4]  (1/100)
+ETIS  HIGH only                                      66.0% [56.3,  74.5]  (66/100)          0.0% [ 0.0,   3.7]  (0/100)
+VT    malicious >= 1      (pre-declared primary)     98.0% [93.0,  99.4]  (98/100)          7.0% [ 3.4,  13.7]  (7/100)
+VT    malicious >= 3      (pre-declared secondary)   97.0% [91.5,  99.0]  (97/100)          1.0% [ 0.2,   5.4]  (1/100)
+
+== VirusTotal lookup status ==
+  phishing    {'found': 99, 'not_found': 1}   (not_found counts as NOT flagged)
+  legitimate  {'not_found': 20, 'found': 80}   (not_found counts as NOT flagged)
+
+== Paired outcomes, ETIS (MEDIUM+) vs VT (malicious >= 1), same URLs ==
+  phishing    both flag 93   ETIS only 1   VT only 5   neither 1   exact McNemar p = 0.219
+  legitimate  both flag 0   ETIS only 1   VT only 7   neither 92   exact McNemar p = 0.070
+  (the test uses only the discordant pairs; with n = 100 per class, small differences are not significant)
+
+== FOR INFORMATION ONLY: VirusTotal threshold sweep (post hoc; do NOT quote a 'best' threshold) ==
+  malicious >= 1  recall  98.0% [93.0,  99.4]  (98/100)   FPR   7.0% [ 3.4,  13.7]  (7/100)
+  malicious >= 2  recall  98.0% [93.0,  99.4]  (98/100)   FPR   2.0% [ 0.6,   7.0]  (2/100)
+  malicious >= 3  recall  97.0% [91.5,  99.0]  (97/100)   FPR   1.0% [ 0.2,   5.4]  (1/100)
+  malicious >= 4  recall  97.0% [91.5,  99.0]  (97/100)   FPR   1.0% [ 0.2,   5.4]  (1/100)
+  malicious >= 5  recall  95.0% [88.8,  97.8]  (95/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+  malicious >= 6  recall  90.0% [82.6,  94.5]  (90/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+  malicious >= 7  recall  88.0% [80.2,  93.0]  (88/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+  malicious >= 8  recall  88.0% [80.2,  93.0]  (88/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+  malicious >= 9  recall  86.0% [77.9,  91.5]  (86/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+  malicious >= 10 recall  83.0% [74.5,  89.1]  (83/100)   FPR   0.0% [ 0.0,   3.7]  (0/100)
+
+== ETIS misses and false positives (URLs only) ==
+  ETIS MISSED phishing   http://web66.com.tw   (VT malicious: 2)
+  ETIS MISSED phishing   https://sifangkayuanwang.com/C5dKu8ZTiY   (VT malicious: 13)
+  ETIS MISSED phishing   https://artekcollection.com   (VT malicious: 14)
+  ETIS MISSED phishing   https://clients.gruppobper.co.uk/it/auth/track.php   (VT malicious: 0)
+  ETIS MISSED phishing   https://kishvandnews.ir/wp-includes/wpp/index.php   (VT malicious: 16)
+  ETIS MISSED phishing   https://apptuts.bio/recarregar-celular   (VT malicious: 6)
+  ETIS FLAGGED legitimate https://www.drogariaminasbrasil.com.br/marca/bepantriz   (decided by url_model; VT malicious: 0)
+  VT   FLAGGED legitimate https://myshopify.com   (VT malicious: 1; ETIS LOW)
+  VT   FLAGGED legitimate https://bigfishgames.com   (VT malicious: 1; ETIS LOW)
+  VT   FLAGGED legitimate https://loja.li   (VT malicious: 4; ETIS LOW)
+  VT   FLAGGED legitimate https://pdst.fm   (VT malicious: 1; ETIS LOW)
+  VT   FLAGGED legitimate https://cash.app   (VT malicious: 1; ETIS LOW)
+  VT   FLAGGED legitimate https://shiftapis.com   (VT malicious: 1; ETIS LOW)
+  VT   FLAGGED legitimate https://aizhantj.com   (VT malicious: 2; ETIS LOW)
+
+Methodology notes (carry into Chapter 5.3 / 6.3; do not omit)
+ - Fresh sample from the CURRENT test split, unseen hosts only; the earlier 200-URL sample came from the old split and
+   overlaps the new training split, so its 'ETIS 100%' is not reportable and is not used here.
+ - VirusTotal is a lookup of existing community/engine reports (v3 GET /urls/{id}), not a rescan; unseen URLs count as
+   not flagged. VirusTotal aggregates feeds that overlap this dataset's phishing source, so its recall is an upper bound.
+ - The legitimate class is mostly popular Tranco homepages plus crawled pages; false-positive rates on obscure
+   legitimate sites are not measured here (see the controls in the held-out typosquat report).
+ - n = 100 per class: intervals are wide; do not claim one tool is better unless the intervals and the paired test agree.
+ - Google Safe Browsing is reported separately and never as a head-to-head with ETIS (live threats vs historical feed).

@@ -1,0 +1,22 @@
+{
+  "tranco_list_id": "downloaded-2026-10-24",
+  "tranco_file": "tranco_top1m.csv",
+  "tranco_sha256": "9029ed7ae14aa46a825a41fbf3412b9d391be1a90ecc6525f7096f29e4894126",
+  "tranco_rows": 1000000,
+  "eg_domains_in_list": 332,
+  "excluded": {
+    "in_dataset": 164
+  },
+  "available_per_band": {
+    "A_top_100k": 20,
+    "B_100k_500k": 77,
+    "C_500k_1M": 71
+  },
+  "sampled_per_band": {
+    "A_top_100k": 20,
+    "B_100k_500k": 77,
+    "C_500k_1M": 71
+  },
+  "seed": 20261024,
+  "git_head": "ab229808093bf50b8a54c8a6d65298ebc24b1ca9"
+}

@@ -1,0 +1,70 @@
+ETIS text-model comparison (group-aware split)
+train=1315  val=292  test=275  (test positives=82)
+
+
+== Validation (used for selection and for tuning C) ==
+model                  val ROC-AUC   val F1  val recall  note
+word_tfidf_logreg           0.9773   0.8852      0.8901  C=30.0
+char_tfidf_logreg           0.9837   0.8962      0.9011  C=30.0
+word_tfidf_lightgbm         0.9560   0.7975      0.7143  300 trees
+bilstm                      0.9538   0.8804      0.8901  saved model
+ensemble_char_bilstm        0.9762   0.9000      0.8901  mean of char LogReg + BiLSTM
+
+SELECTED on validation ROC-AUC: char_tfidf_logreg
+
+== Test (95% bootstrap CI, 2,000 resamples) ==
+word_tfidf_logreg
+    accuracy  0.9491   [0.9236, 0.9745]
+    precision 0.9359   [0.8784, 0.9865]
+    recall    0.8902   [0.8235, 0.9539]
+    f1        0.9125   [0.8645, 0.9554]
+    roc_auc   0.9850   [0.9728, 0.9947]
+char_tfidf_logreg  <- selected
+    accuracy  0.9709   [0.9527, 0.9891]
+    precision 0.9625   [0.9157, 1.0000]
+    recall    0.9390   [0.8876, 0.9875]
+    f1        0.9506   [0.9150, 0.9820]
+    roc_auc   0.9963   [0.9919, 0.9994]
+word_tfidf_lightgbm
+    accuracy  0.9236   [0.8909, 0.9527]
+    precision 0.9420   [0.8816, 0.9868]
+    recall    0.7927   [0.7013, 0.8778]
+    f1        0.8609   [0.7950, 0.9157]
+    roc_auc   0.9867   [0.9751, 0.9950]
+bilstm
+    accuracy  0.9491   [0.9236, 0.9745]
+    precision 0.9146   [0.8493, 0.9710]
+    recall    0.9146   [0.8493, 0.9718]
+    f1        0.9146   [0.8667, 0.9565]
+    roc_auc   0.9764   [0.9524, 0.9949]
+ensemble_char_bilstm
+    accuracy  0.9564   [0.9309, 0.9782]
+    precision 0.9375   [0.8800, 0.9867]
+    recall    0.9146   [0.8500, 0.9681]
+    f1        0.9259   [0.8800, 0.9643]
+    roc_auc   0.9939   [0.9865, 0.9988]
+
+== Paired difference vs BiLSTM (positive = model beats BiLSTM) ==
+  word_tfidf_logreg     f1      -0.0021  [-0.0445, +0.0409]  NOT distinguishable (CI contains 0)
+  word_tfidf_logreg     roc_auc +0.0086  [-0.0058, +0.0261]  NOT distinguishable (CI contains 0)
+  char_tfidf_logreg     f1      +0.0360  [+0.0048, +0.0713]  distinguishable
+  char_tfidf_logreg     roc_auc +0.0200  [+0.0034, +0.0414]  distinguishable
+  word_tfidf_lightgbm   f1      -0.0537  [-0.1119, +0.0008]  NOT distinguishable (CI contains 0)
+  word_tfidf_lightgbm   roc_auc +0.0103  [-0.0096, +0.0343]  NOT distinguishable (CI contains 0)
+  ensemble_char_bilstm  f1      +0.0113  [-0.0118, +0.0366]  NOT distinguishable (CI contains 0)
+  ensemble_char_bilstm  roc_auc +0.0176  [+0.0032, +0.0357]  distinguishable
+
+== Test recall by label_detail (positives only) ==
+  phishing   n=47   word_tfidf_logreg=0.83, char_tfidf_logreg=0.89, word_tfidf_lightgbm=0.70, bilstm=0.89, ensemble_char_bilstm=0.87
+  scam       n=31   word_tfidf_logreg=0.97, char_tfidf_logreg=1.00, word_tfidf_lightgbm=0.94, bilstm=1.00, ensemble_char_bilstm=1.00
+  spam       n=4    word_tfidf_logreg=1.00, char_tfidf_logreg=1.00, word_tfidf_lightgbm=0.75, bilstm=0.50, ensemble_char_bilstm=0.75
+
+== Test accuracy by source ==
+  github_arabic_text_spam_detection        n=11   word_tfidf_logreg=0.91, char_tfidf_logreg=0.91, word_tfidf_lightgbm=0.82, bilstm=0.73, ensemble_char_bilstm=0.82
+  kaggle_arabic_phishing_fully_dataset     n=185  word_tfidf_logreg=0.97, char_tfidf_logreg=0.99, word_tfidf_lightgbm=0.97, bilstm=0.97, ensemble_char_bilstm=0.98
+  kaggle_dialectal_arabic_sms              n=36   word_tfidf_logreg=0.97, char_tfidf_logreg=1.00, word_tfidf_lightgbm=0.86, bilstm=1.00, ensemble_char_bilstm=1.00
+  salloum_gaber_bilingual_corpus           n=43   word_tfidf_logreg=0.84, char_tfidf_logreg=0.88, word_tfidf_lightgbm=0.79, bilstm=0.88, ensemble_char_bilstm=0.86
+
+== Test accuracy by language ==
+  ar       n=239  word_tfidf_logreg=0.95, char_tfidf_logreg=0.97, word_tfidf_lightgbm=0.93, bilstm=0.94, ensemble_char_bilstm=0.95
+  mixed    n=36   word_tfidf_logreg=0.97, char_tfidf_logreg=1.00, word_tfidf_lightgbm=0.86, bilstm=1.00, ensemble_char_bilstm=1.00

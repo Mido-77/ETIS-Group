@@ -1,0 +1,32 @@
+ETIS -- VirusTotal Commercial-Tool Comparison
+Stratified sample: 100 phishing + 100 legitimate = 200 URLs
+(drawn from 12702-row test-split URL subset, seed=42)
+
+Accuracy:  0.9600
+Precision: 0.9259
+Recall:    1.0000
+F1:        0.9615
+ROC-AUC:   0.9990
+
+Confusion matrix [[TN,FP],[FN,TP]]:
+[[ 92   8]
+ [  0 100]]
+
+URLs with no VT report (treated as not-flagged): 0/200
+Request errors (excluded from sample): 0
+
+======================================================================
+METHODOLOGY NOTES -- carry into Chapter 5.3/6.3, do not omit:
+- SAMPLE, not full test set: VirusTotal's free tier (4 req/min)
+  makes a full 12702-row run impractical (~53 hours).
+  This is a 200-URL stratified sample, seed=42.
+- Lookup, not fresh scan: queries existing community reports via
+  the v3 URL-report endpoint. URLs VT has never seen return no
+  report and are treated as 'not flagged' here -- matching what a
+  real user checking that URL on virustotal.com would see, but
+  meaning this is not a live-rescan comparison.
+- Same PhishTank/OpenPhish source-overlap caveat as the Safe
+  Browsing comparison applies: VirusTotal aggregates many of the
+  same public feeds ETIS's blacklist is seeded from, so recall
+  here should be read as an upper-bound estimate, not a clean
+  measure of generalization to genuinely novel threats.

@@ -1,0 +1,36 @@
+ETIS grouped split report
+seed=42  ratios=(0.7, 0.15, 0.15)  MAX_HOST_GROUP=50  TEXT_SIM_THRESHOLD=0.9
+
+Overall:
+  train  64,960  (70.0%)
+  val    13,931  (15.0%)
+  test   13,914  (15.0%)
+
+By content kind x label_detail (train / val / test):
+  synthetic legitimate        17       8       0
+  synthetic phishing          20       9       0
+  text      legitimate       897     193     193
+  text      phishing         188      48      47
+  text      scam             177      28      31
+  text      spam              16       6       4
+  url       legitimate    19,373   4,150   4,148
+  url       phishing      44,272   9,489   9,491
+
+URL group types (rows):
+  host: 65,622
+  shared_platform: 25,301
+  distinct host groups: 53,435
+
+Leakage -- test phishing URLs whose host also appears in train:
+  BEFORE (old split): 4,310 of 9,488  (45.4%)
+  AFTER  (new split): 3,815 of 9,491  (40.2%)
+    of which on non-platform hosts (must be 0): 0
+    (the remainder are shared-platform rows, which share a host by construction;
+     report them as a separate group in Chapter 5)
+
+Text group types (rows): text_single=1,593, text_cluster=235
+  near-duplicate clusters kept together (2..25 rows): 79
+  clusters spanning >1 split BEFORE: 0   AFTER (must be 0): 0
+  cluster size distribution (size: count): 2:24, 3:35, 4:18, 5:2
+
+Synthetic rows in test (must be 0): 0

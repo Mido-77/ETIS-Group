@@ -1,0 +1,39 @@
+{
+  "seed": 20261021,
+  "per_technique": 4,
+  "generated_utc": "2026-10-22",
+  "csv_sha256": "c66656475718c0e03ca05a178ea8653ae0add441f0dcb9cd752cc7b14bf263ee",
+  "rows": {
+    "typosquat": 2011,
+    "genuine": 280,
+    "control": 84
+  },
+  "dropped": {
+    "dropped_host_in_dev_benchmark": 565,
+    "dropped_host_in_dataset": 2
+  },
+  "ambiguity_counts": {
+    "short_label_collision": 40,
+    "none": 1959,
+    "namesake_label_ordinary_tld": 12
+  },
+  "git": {
+    "head": "30edef260b177500bcfcc333f72c563424e33399",
+    "dirty_backend_or_ml": ""
+  },
+  "freeze_files": {
+    "backend/app/engines/rule_based/domain_typosquatting_detector.py": "b4972791c2d5f2264bcc4147b0c7bd0a150f4e86765a4c240e9769f1c2292726",
+    "backend/app/engines/rule_based/url_pattern_analyzer.py": "ce3867e827fd35edd8f7276bf6af2d387e527f3b2f46af8ec22b0e2628b7c811",
+    "backend/app/engines/rule_based/arabic_keyword_detector.py": "5bc6aa9514f158ef71ed9749a7ba3834d04c7d90dcc96cbd8b0b542a6a042b83",
+    "backend/app/engines/rule_based/rule_based_engine.py": "c8eb75f9ab72ec54a19a6113d8c1fda55e8424b2b997fffdc2cd9461d3b7816a",
+    "backend/app/engines/threat_intel/blacklist_lookup.py": "900c62ce49078455ffcbc3230de8f02f11d0132f1d363c1db3fa7a5d235374b5",
+    "backend/app/engines/risk_scoring.py": "3126cd86f3b8e0777bb183fefb6960c070b773f5ab790811c41d7f55761567ed",
+    "backend/app/engines/ml/url_features.py": "24d33607811b80ac4efb5f7894b218f0362abd9a68ffb47e6c7dce16729341f2",
+    "backend/app/engines/ml/url_model_inference.py": "f192e3e16cc04954d6ea490bdc9821d0830b028e1eb3ab27520cd6e5b8f08a0c",
+    "backend/app/engines/ml/text_char_inference.py": "be9f445f9db8a525849780b1425ed93fd8f9696cc8312f3db2cd2752460e02e3",
+    "backend/app/core/egyptian_brands.py": "fdadfa3fbec4a6922e548223d7890d7a4ea4b79e1ce1e54e8435a08a2120317c",
+    "backend/app/core/url_validation.py": "37b85f5ebc276d2d6b20b774c020beddf669b1f546835fffacb01b2118ae93ab",
+    "ml/models/text_char_logreg.joblib": "ad53f1a015887126e29898e03e843bef82258fffabc149f8e16deaac6d8d9659",
+    "ml/models/url_ensemble.joblib": "5b48c1947657a04c0fa31503954ada1b2d90fd71119fd99cfda2dbd65cec6753"
+  }
+}

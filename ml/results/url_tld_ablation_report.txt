@@ -1,0 +1,58 @@
+URL model TLD-masking ablation (OFFLINE; the live model and backend are untouched)
+git HEAD: 74d67a1717db996ea50eb060676babf9bb5f4852; masked artifact: ml\ablation\url_ensemble_tldmasked.joblib (not used by the backend)
+baseline = the DEPLOYED artifact ml\models\url_ensemble.joblib
+baseline check: retrained unmasked vs deployed artifact on 2000 test URLs: max |difference| = 0.00e+00, mean = 0.00e+00  -> matches
+Tiers: MEDIUM = 1% and HIGH = 0.1% false-positive rate of legitimate VALIDATION URLs, per model (thresholds in the table below).
+Rows of one host are not independent and CIs are Wilson 95%: treat small differences as noise.
+
+thresholds   deployed: medium 0.666, high 0.983    masked: medium 0.668, high 0.872
+
+== 1. UNSEEN-HOST test URLs (group_type = host; n = 9,823, phishing 5,676) ==
+model                  ROC-AUC  MEDIUM+ recall                    MEDIUM+ false-positive rate       HIGH recall                       
+deployed (baseline)     0.9952   92.8% [92.1,  93.4] (5265/5676)    0.8% [ 0.6,   1.1] (34/4147)     66.2% [65.0,  67.5] (3760/5676)  
+TLD-masked              0.9952   93.4% [92.7,  94.0] (5299/5676)    0.8% [ 0.6,   1.2] (35/4147)     85.8% [84.8,  86.7] (4869/5676)  
+  by URL type (MEDIUM+):
+    bare host   deployed (baseline)   recall  96.3% [95.6,  96.9] (3153/3274)  FPR   0.0% [ 0.0,   0.1] (0/2928)
+    bare host   TLD-masked            recall  96.6% [95.9,  97.2] (3163/3274)  FPR   0.0% [ 0.0,   0.1] (0/2928)
+    with a path deployed (baseline)   recall  87.9% [86.6,  89.2] (2112/2402)  FPR   2.8% [ 2.0,   3.9] (34/1219)
+    with a path TLD-masked            recall  88.9% [87.6,  90.1] (2136/2402)  FPR   2.9% [ 2.1,   4.0] (35/1219)
+  paired, phishing: both flag 5175, only deployed 90, only masked 124, exact McNemar p = 0.0239
+  paired, legitimate: both flag 17, only deployed 17, only masked 18, exact McNemar p = 1.0000
+
+== 2. TLD SWAP, URL model alone, MEDIUM+ (all 9,217 eligible unseen-host test URLs; swapped URLs are SYNTHETIC) ==
+model                 variant   phishing recall                   legitimate false-positive rate    
+deployed (baseline)   original   92.9% [92.2,  93.5] (5199/5597)    0.8% [ 0.6,   1.2] (30/3620)
+deployed (baseline)   swap_eg    25.2% [24.1,  26.3] (1410/5597)    0.0% [ 0.0,   0.1] (0/3620)
+deployed (baseline)   swap_net   88.3% [87.4,  89.1] (4942/5597)    0.9% [ 0.6,   1.2] (31/3620)
+TLD-masked            original   93.4% [92.7,  94.0] (5229/5597)    0.9% [ 0.6,   1.2] (32/3620)
+TLD-masked            swap_eg    92.4% [91.7,  93.1] (5171/5597)    1.0% [ 0.7,   1.3] (35/3620)
+TLD-masked            swap_net   93.6% [92.9,  94.2] (5236/5597)    1.1% [ 0.8,   1.5] (41/3620)
+  deployed (baseline): recall drop original -> swap_eg = 67.7 points (lost 3789, gained 0, p = 0.0000); original -> swap_net = 4.6 points
+  TLD-masked: recall drop original -> swap_eg = 1.0 points (lost 94, gained 36, p = 0.0000); original -> swap_net = -0.1 points
+
+== 3. REAL EGYPTIAN SITES, URL model alone, MEDIUM+ (assumed legitimate; the allowlist is NOT applied here) ==
+  (a) dataset .eg test URLs, unseen hosts, brand-registry domains excluded (n = 222 URLs, 32 domains)
+      deployed (baseline)   URLs   0.0% [ 0.0,   1.7] (0/222)      domains   0.0% [ 0.0,  10.7] (0/32)
+      TLD-masked            URLs   0.0% [ 0.0,   1.7] (0/222)      domains   0.0% [ 0.0,  10.7] (0/32)
+  (b) Tranco .eg sample absent from the dataset, apex form (168 domains)
+      deployed (baseline)     0.0% [ 0.0,   2.2] (0/168)      by band: A_top_100k 0/20; B_100k_500k 0/77; C_500k_1M 0/71
+      TLD-masked              0.0% [ 0.0,   2.2] (0/168)      by band: A_top_100k 0/20; B_100k_500k 0/77; C_500k_1M 0/71
+  (b) Tranco .eg sample absent from the dataset, www form (168 domains)
+      deployed (baseline)     0.0% [ 0.0,   2.2] (0/168)      by band: A_top_100k 0/20; B_100k_500k 0/77; C_500k_1M 0/71
+      TLD-masked              0.0% [ 0.0,   2.2] (0/168)      by band: A_top_100k 0/20; B_100k_500k 0/77; C_500k_1M 0/71
+  (c) held-out controls, real Egyptian sites (list written from memory; informational; 36 URLs)
+      deployed (baseline)    19.4% [ 9.8,  35.0] (7/36)       flagged hosts: almasryalyoum.com, elmenus.com, masrawy.com, shorouknews.com, swvl.com, vezeeta.com, youm7.com
+      TLD-masked             13.9% [ 6.1,  28.7] (5/36)       flagged hosts: almasryalyoum.com, olx.com.eg, swvl.com, vezeeta.com, youm7.com
+
+== Pre-declared promotion criteria (all three must hold before replacing the live model is even discussed) ==
+  C1 cost: recall 93.4% vs 92.8% (allowed loss 3.0 pts), FPR 0.84% vs 0.82% (allowed gain 0.5 pts)  -> PASS
+  C2 benefit: masked recall drop on swap_eg = 1.0 points (allowed <= 25; deployed model: 67.7)  -> PASS
+  C3 side effect: masked FPR on real .eg sites: dataset 0.0%, Tranco apex 0.0% (allowed <= 5% on both)  -> PASS
+  OVERALL: all three hold. This script promotes nothing.
+
+Caveats
+ - The swap test is synthetic and only the LAST host label changes; real .eg phishing may differ (public feeds contain almost none).
+ - Masking removes the TLD identity, not everything correlated with it (host length, a 'com' second-level label, ...).
+ - The Egyptian-site sets are small and assumed legitimate; Egyptian .com sites are covered only by the memory-written controls (c).
+ - Promoting the masked model would invalidate the frozen held-out results (the URL model is part of the system): re-scoring
+   every evaluation with ONE consistent model would be required first.

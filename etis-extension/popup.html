@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font-family: sans-serif; width: 300px; margin: 0; padding: 12px; }
+    button { width: 100%; padding: 8px; margin-top: 8px; cursor: pointer; }
+    button.secondary {
+      background: #fff;
+      border: 1px solid #1d4e89;
+      color: #1d4e89;
+    }
+    #result { margin-top: 12px; font-size: 13px; white-space: pre-wrap; }
+
+    /* Brand header: full-bleed navy band (negative margins cancel the
+       body's 12px padding) holding the cream wordmark. */
+    .brand-header {
+      background: #1d4e89;
+      margin: -12px -12px 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+    }
+    .brand-header img {
+      height: 26px;
+      width: auto;
+      display: block;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .toggle-row label { font-size: 13px; }
+
+    /* iOS-style toggle switch. The real checkbox stays in the DOM
+       (opacity: 0, zero size) for actual state/accessibility -- only its
+       visual appearance is replaced by the .slider pseudo-elements. */
+    .ios-switch {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 24px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .ios-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .ios-switch .slider {
+      position: absolute;
+      inset: 0;
+      background-color: #ccc;
+      border-radius: 999px;
+      transition: background-color 0.2s ease;
+    }
+    .ios-switch .slider::before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+    .ios-switch input:checked + .slider {
+      background-color: #1d4e89;
+    }
+    .ios-switch input:checked + .slider::before {
+      transform: translateX(18px);
+    }
+
+    .recent-heading {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+    #recentScans { margin-top: 6px; }
+    .scan-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .verdict-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .scan-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .scan-meta { color: #888; flex-shrink: 0; }
+    .empty-state { font-size: 12px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="brand-header">
+    <img src="icons/logo-wordmark.png" alt="ETIS" />
+  </div>
+
+  <div class="toggle-row">
+    <label for="autoScanToggle">Automatic scanning</label>
+    <label class="ios-switch">
+      <input type="checkbox" id="autoScanToggle" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <button id="scanBtn">Scan open email</button>
+  <button id="openWebsiteBtn" class="secondary">Open full report on website</button>
+  <div id="result"></div>
+
+  <div class="recent-heading">Recent scans</div>
+  <div id="recentScans"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

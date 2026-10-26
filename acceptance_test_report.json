@@ -1,0 +1,633 @@
+﻿[
+    {
+        "Id":  1,
+        "Desc":  "Known phishing URL (exact blacklist match)",
+        "Expected":  "HIGH",
+        "Actual":  "HIGH",
+        "Score":  51.43,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  51.43,
+                    "verdict":  "HIGH",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "blacklist"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  0.0,
+                                                   "blacklist":  51.43
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  0.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  null,
+                                                                                     "english_keyword":  null,
+                                                                                     "domain_typosquatting":  {
+                                                                                                                  "score":  0.0,
+                                                                                                                  "matched_brand":  null,
+                                                                                                                  "matched_brand_domain":  null,
+                                                                                                                  "technique":  null,
+                                                                                                                  "normalized_domain":  "allegrolokalnie.pl-5878761824523.lol"
+                                                                                                              },
+                                                                                     "url_pattern":  {
+                                                                                                         "score":  0.0,
+                                                                                                         "flags":  [
+
+                                                                                                                   ]
+                                                                                                     }
+                                                                                 }
+                                                          },
+                                           "blacklist":  {
+                                                             "score":  90.0,
+                                                             "match_type":  "exact",
+                                                             "matched_entry":  {
+                                                                                   "url":  "https://allegrolokalnie.pl-5878761824523.lol/oferta/l/-130425072",
+                                                                                   "source":  "phishtank",
+                                                                                   "brand_target":  "Allegro",
+                                                                                   "first_seen":  "2026-07-10",
+                                                                                   "last_seen":  "2026-07-10"
+                                                                               }
+                                                         },
+                                           "lstm":  null
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  2,
+        "Desc":  "Known legitimate URL (verified Egyptian brand)",
+        "Expected":  "LOW",
+        "Actual":  "LOW",
+        "Score":  0.0,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  0.0,
+                    "verdict":  "LOW",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "blacklist"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  0.0,
+                                                   "blacklist":  0.0
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  0.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  null,
+                                                                                     "english_keyword":  null,
+                                                                                     "domain_typosquatting":  {
+                                                                                                                  "score":  0.0,
+                                                                                                                  "matched_brand":  "Commercial International Bank (CIB)",
+                                                                                                                  "matched_brand_domain":  "cibeg.com",
+                                                                                                                  "technique":  "exact_match",
+                                                                                                                  "normalized_domain":  "cibeg.com"
+                                                                                                              },
+                                                                                     "url_pattern":  {
+                                                                                                         "score":  0.0,
+                                                                                                         "flags":  [
+
+                                                                                                                   ]
+                                                                                                     }
+                                                                                 }
+                                                          },
+                                           "blacklist":  {
+                                                             "score":  0.0,
+                                                             "match_type":  null,
+                                                             "matched_entry":  null
+                                                         },
+                                           "lstm":  null
+                                       },
+                    "allowlisted":  true,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  3,
+        "Desc":  "Domain-embedding typosquat (not blacklisted)",
+        "Expected":  "MEDIUM",
+        "Actual":  "MEDIUM",
+        "Score":  40.89,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  40.89,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "blacklist"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  40.89,
+                                                   "blacklist":  0.0
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  95.4,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  null,
+                                                                                     "english_keyword":  null,
+                                                                                     "domain_typosquatting":  {
+                                                                                                                  "score":  95.0,
+                                                                                                                  "matched_brand":  "Commercial International Bank (CIB)",
+                                                                                                                  "matched_brand_domain":  "cibeg.com",
+                                                                                                                  "technique":  "domain_embedding",
+                                                                                                                  "normalized_domain":  "cibeg.com.verify-account-now.net"
+                                                                                                              },
+                                                                                     "url_pattern":  {
+                                                                                                         "score":  8.0,
+                                                                                                         "flags":  [
+                                                                                                                       [
+                                                                                                                           "no_https",
+                                                                                                                           8,
+                                                                                                                           null
+                                                                                                                       ]
+                                                                                                                   ]
+                                                                                                     }
+                                                                                 }
+                                                          },
+                                           "blacklist":  {
+                                                             "score":  0.0,
+                                                             "match_type":  null,
+                                                             "matched_entry":  null
+                                                         },
+                                           "lstm":  null
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  4,
+        "Desc":  "Homoglyph domain (Cyrillic e)",
+        "Expected":  "MEDIUM/HIGH",
+        "Actual":  "MEDIUM",
+        "Score":  39.7,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  39.7,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "blacklist"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  39.7,
+                                                   "blacklist":  0.0
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  92.64,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  null,
+                                                                                     "english_keyword":  null,
+                                                                                     "domain_typosquatting":  {
+                                                                                                                  "score":  92.0,
+                                                                                                                  "matched_brand":  "Commercial International Bank (CIB)",
+                                                                                                                  "matched_brand_domain":  "cibeg.com",
+                                                                                                                  "technique":  "homoglyph_confusable",
+                                                                                                                  "normalized_domain":  "cibÐµg.com"
+                                                                                                              },
+                                                                                     "url_pattern":  {
+                                                                                                         "score":  8.0,
+                                                                                                         "flags":  [
+                                                                                                                       [
+                                                                                                                           "no_https",
+                                                                                                                           8,
+                                                                                                                           null
+                                                                                                                       ]
+                                                                                                                   ]
+                                                                                                     }
+                                                                                 }
+                                                          },
+                                           "blacklist":  {
+                                                             "score":  0.0,
+                                                             "match_type":  null,
+                                                             "matched_entry":  null
+                                                         },
+                                           "lstm":  null
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  5,
+        "Desc":  "Arabic phishing text",
+        "Expected":  "HIGH",
+        "Actual":  "HIGH",
+        "Score":  77.53,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  77.53,
+                    "verdict":  "HIGH",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "lstm"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  15.0,
+                                                   "lstm":  62.54
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  60.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  {
+                                                                                                            "score":  60.0,
+                                                                                                            "matched_high":  [
+                                                                                                                                 [
+                                                                                                                                     "Ø¨Ø·Ø§ÙØªÙ Ù\u0085Ø­Ø¸ÙØ±Ø©",
+                                                                                                                                     "card blocked (direct)"
+                                                                                                                                 ],
+                                                                                                                                 [
+                                                                                                                                     "ÙÙØ¯ Ø§ÙØªØ­ÙÙ",
+                                                                                                                                     "verification code (OTP) request"
+                                                                                                                                 ]
+                                                                                                                             ],
+                                                                                                            "matched_medium":  [
+
+                                                                                                                               ],
+                                                                                                            "matched_low":  [
+
+                                                                                                                            ],
+                                                                                                            "low_weight_counted":  false
+                                                                                                        },
+                                                                                     "english_keyword":  {
+                                                                                                             "score":  0.0,
+                                                                                                             "matched_high":  [
+
+                                                                                                                              ],
+                                                                                                             "matched_medium":  [
+
+                                                                                                                                ],
+                                                                                                             "matched_low":  [
+
+                                                                                                                             ],
+                                                                                                             "low_weight_counted":  false
+                                                                                                         },
+                                                                                     "domain_typosquatting":  null,
+                                                                                     "url_pattern":  null
+                                                                                 }
+                                                          },
+                                           "blacklist":  null,
+                                           "lstm":  {
+                                                        "score":  83.38,
+                                                        "probability":  0.8338057398796082
+                                                    }
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  6,
+        "Desc":  "Arabic legitimate text",
+        "Expected":  "LOW",
+        "Actual":  "MEDIUM",
+        "Score":  13.01,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  13.01,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "lstm"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  0.0,
+                                                   "lstm":  13.01
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  0.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  {
+                                                                                                            "score":  0.0,
+                                                                                                            "matched_high":  [
+
+                                                                                                                             ],
+                                                                                                            "matched_medium":  [
+
+                                                                                                                               ],
+                                                                                                            "matched_low":  [
+                                                                                                                                [
+                                                                                                                                    "Ø­Ø³Ø§Ø¨",
+                                                                                                                                    "account"
+                                                                                                                                ]
+                                                                                                                            ],
+                                                                                                            "low_weight_counted":  false
+                                                                                                        },
+                                                                                     "english_keyword":  {
+                                                                                                             "score":  0.0,
+                                                                                                             "matched_high":  [
+
+                                                                                                                              ],
+                                                                                                             "matched_medium":  [
+
+                                                                                                                                ],
+                                                                                                             "matched_low":  [
+
+                                                                                                                             ],
+                                                                                                             "low_weight_counted":  false
+                                                                                                         },
+                                                                                     "domain_typosquatting":  null,
+                                                                                     "url_pattern":  null
+                                                                                 }
+                                                          },
+                                           "blacklist":  null,
+                                           "lstm":  {
+                                                        "score":  17.35,
+                                                        "probability":  0.17350055277347565
+                                                    }
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  7,
+        "Desc":  "English phishing text (lottery/advance-fee)",
+        "Expected":  "HIGH",
+        "Actual":  "MEDIUM",
+        "Score":  21.77,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  21.77,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "lstm"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  20.0,
+                                                   "lstm":  1.77
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  80.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  {
+                                                                                                            "score":  0.0,
+                                                                                                            "matched_high":  [
+
+                                                                                                                             ],
+                                                                                                            "matched_medium":  [
+
+                                                                                                                               ],
+                                                                                                            "matched_low":  [
+
+                                                                                                                            ],
+                                                                                                            "low_weight_counted":  false
+                                                                                                        },
+                                                                                     "english_keyword":  {
+                                                                                                             "score":  80.0,
+                                                                                                             "matched_high":  [
+                                                                                                                                  [
+                                                                                                                                      "bank account number",
+                                                                                                                                      "requests bank account number"
+                                                                                                                                  ],
+                                                                                                                                  [
+                                                                                                                                      "you have been selected",
+                                                                                                                                      "lottery/prize selection scam opener"
+                                                                                                                                  ]
+                                                                                                                              ],
+                                                                                                             "matched_medium":  [
+
+                                                                                                                                ],
+                                                                                                             "matched_low":  [
+                                                                                                                                 [
+                                                                                                                                     "account",
+                                                                                                                                     "generic account reference"
+                                                                                                                                 ],
+                                                                                                                                 [
+                                                                                                                                     "reply",
+                                                                                                                                     "generic reply reference"
+                                                                                                                                 ]
+                                                                                                                             ],
+                                                                                                             "low_weight_counted":  true
+                                                                                                         },
+                                                                                     "domain_typosquatting":  null,
+                                                                                     "url_pattern":  null
+                                                                                 }
+                                                          },
+                                           "blacklist":  null,
+                                           "lstm":  {
+                                                        "score":  2.36,
+                                                        "probability":  0.023614611476659775
+                                                    }
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  8,
+        "Desc":  "English legitimate text",
+        "Expected":  "LOW",
+        "Actual":  "MEDIUM",
+        "Score":  1.25,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  1.25,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "lstm"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  0.0,
+                                                   "lstm":  1.25
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  0.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  {
+                                                                                                            "score":  0.0,
+                                                                                                            "matched_high":  [
+
+                                                                                                                             ],
+                                                                                                            "matched_medium":  [
+
+                                                                                                                               ],
+                                                                                                            "matched_low":  [
+
+                                                                                                                            ],
+                                                                                                            "low_weight_counted":  false
+                                                                                                        },
+                                                                                     "english_keyword":  {
+                                                                                                             "score":  0.0,
+                                                                                                             "matched_high":  [
+
+                                                                                                                              ],
+                                                                                                             "matched_medium":  [
+
+                                                                                                                                ],
+                                                                                                             "matched_low":  [
+
+                                                                                                                             ],
+                                                                                                             "low_weight_counted":  false
+                                                                                                         },
+                                                                                     "domain_typosquatting":  null,
+                                                                                     "url_pattern":  null
+                                                                                 }
+                                                          },
+                                           "blacklist":  null,
+                                           "lstm":  {
+                                                        "score":  1.66,
+                                                        "probability":  0.01658712513744831
+                                                    }
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  9,
+        "Desc":  "Mixed-language phishing text",
+        "Expected":  "MEDIUM/HIGH",
+        "Actual":  "MEDIUM",
+        "Score":  9.8,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  9.8,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "lstm"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  9.0,
+                                                   "lstm":  0.8
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  36.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  {
+                                                                                                            "score":  20.0,
+                                                                                                            "matched_high":  [
+
+                                                                                                                             ],
+                                                                                                            "matched_medium":  [
+                                                                                                                                   [
+                                                                                                                                       "Ø§Ø­ØµÙ",
+                                                                                                                                       "get/obtain"
+                                                                                                                                   ]
+                                                                                                                               ],
+                                                                                                            "matched_low":  [
+
+                                                                                                                            ],
+                                                                                                            "low_weight_counted":  false
+                                                                                                        },
+                                                                                     "english_keyword":  {
+                                                                                                             "score":  20.0,
+                                                                                                             "matched_high":  [
+
+                                                                                                                              ],
+                                                                                                             "matched_medium":  [
+                                                                                                                                    [
+                                                                                                                                        "prize",
+                                                                                                                                        "prize reference"
+                                                                                                                                    ]
+                                                                                                                                ],
+                                                                                                             "matched_low":  [
+                                                                                                                                 [
+                                                                                                                                     "link",
+                                                                                                                                     "generic link reference"
+                                                                                                                                 ]
+                                                                                                                             ],
+                                                                                                             "low_weight_counted":  false
+                                                                                                         },
+                                                                                     "domain_typosquatting":  null,
+                                                                                     "url_pattern":  null
+                                                                                 }
+                                                          },
+                                           "blacklist":  null,
+                                           "lstm":  {
+                                                        "score":  1.07,
+                                                        "probability":  0.01067340187728405
+                                                    }
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    },
+    {
+        "Id":  10,
+        "Desc":  "IP-address-host URL (no blacklist match)",
+        "Expected":  "MEDIUM",
+        "Actual":  "MEDIUM",
+        "Score":  17.57,
+        "Status":  "OK",
+        "Raw":  {
+                    "final_score":  17.57,
+                    "verdict":  "MEDIUM",
+                    "engines_applied":  [
+                                            "rule_based",
+                                            "blacklist"
+                                        ],
+                    "weighted_contributions":  {
+                                                   "rule_based":  17.57,
+                                                   "blacklist":  0.0
+                                               },
+                    "engine_details":  {
+                                           "rule_based":  {
+                                                              "score":  41.0,
+                                                              "engine_results":  {
+                                                                                     "arabic_keyword":  null,
+                                                                                     "english_keyword":  null,
+                                                                                     "domain_typosquatting":  {
+                                                                                                                  "score":  0.0,
+                                                                                                                  "matched_brand":  null,
+                                                                                                                  "matched_brand_domain":  null,
+                                                                                                                  "technique":  null,
+                                                                                                                  "normalized_domain":  "192.168.1.50"
+                                                                                                              },
+                                                                                     "url_pattern":  {
+                                                                                                         "score":  41.0,
+                                                                                                         "flags":  [
+                                                                                                                       [
+                                                                                                                           "ip_address_host",
+                                                                                                                           25,
+                                                                                                                           "192.168.1.50"
+                                                                                                                       ],
+                                                                                                                       [
+                                                                                                                           "suspicious_path_keyword",
+                                                                                                                           8,
+                                                                                                                           "/login"
+                                                                                                                       ],
+                                                                                                                       [
+                                                                                                                           "no_https",
+                                                                                                                           8,
+                                                                                                                           null
+                                                                                                                       ]
+                                                                                                                   ]
+                                                                                                     }
+                                                                                 }
+                                                          },
+                                           "blacklist":  {
+                                                             "score":  0.0,
+                                                             "match_type":  null,
+                                                             "matched_entry":  null
+                                                         },
+                                           "lstm":  null
+                                       },
+                    "allowlisted":  false,
+                    "saved":  true,
+                    "save_error":  null
+                }
+    }
+]

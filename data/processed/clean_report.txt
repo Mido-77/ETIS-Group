@@ -1,0 +1,26 @@
+ETIS dataset cleaning report
+Rows in:  92,828
+Rows out: 92,805   (removed 23)
+
+Duplicate handling:
+  url_duplicate_groups: 23
+  url_rows_removed_as_duplicate: 23
+  groups that crossed train/val/test BEFORE cleaning: 0
+
+Rows removed, by source:
+  crawl_legit_paths: 23
+
+label_detail after cleaning:
+  phishing: 63,564
+  legitimate: 28,979
+  scam: 236
+  spam: 26
+
+Existing split column after cleaning (unchanged assignments):
+  train: 59,291
+  val: 12,714
+  test: 12,697
+  (empty): 8,103
+
+Conflicting-label rows dropped: 0 (see dedup_conflicts.csv)
+Synthetic rows kept: 54

@@ -1,0 +1,14 @@
+Accuracy:  0.9491
+Precision: 0.9146
+Recall:    0.9146
+F1:        0.9146
+ROC-AUC:   0.9764
+
+              precision    recall  f1-score   support
+
+  legitimate       0.96      0.96      0.96       193
+    phishing       0.91      0.91      0.91        82
+
+    accuracy                           0.95       275
+   macro avg       0.94      0.94      0.94       275
+weighted avg       0.95      0.95      0.95       275

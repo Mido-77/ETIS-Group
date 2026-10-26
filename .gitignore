@@ -1,0 +1,54 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Env files
+.env
+.env.local
+
+# Node / React
+node_modules/
+frontend/dist/
+frontend/build/
+
+# ML artifacts (large files -- generally track structure, not weights,
+# EXCEPT the two production inference artifacts below, which are
+# deliberately committed. See CLAUDE.md "LSTM artifact storage" for the
+# reasoning: these are NOT bit-identical-reproducible via retraining
+# (weight init is random), so a fresh clone / hosted deployment
+# (Railway/Render) needs them tracked in git, not regenerated.
+ml/models/*.h5
+ml/models/*.keras
+ml/models/*.pkl
+!ml/models/lstm_phishing_classifier.keras
+
+# Data: dataset.csv is tracked intentionally (thesis deliverable, small
+# enough). The preprocessed .npy arrays are large and fully regenerable
+# by re-running ml/preprocess_lstm_data.py against the tracked dataset,
+# so those stay ignored. tokenizer.pkl is the other exception -- like the
+# model weights, it's not deterministically reproducible (Keras Tokenizer
+# fit order/hashing), so it's committed alongside the model.
+ml/data/*.npy
+!ml/data/tokenizer.pkl
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+data/processed/dataset.pre_split.csv
+data/processed/dataset.pre_clean.csv
+ml/data/tokenizer_v1_old_split.pkl
+
+evaluation/final_system_scores_*.csv
+evaluation/final_system_errors_before.csv
+
+# Real collected messages (personal data): never commit
+data/raw/real_messages/
+
+evaluation/final_system_errors*.csv
+evaluation/final_system_changes_*.csv
+data/external/

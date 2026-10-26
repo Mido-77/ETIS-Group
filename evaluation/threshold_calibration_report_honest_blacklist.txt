@@ -1,0 +1,54 @@
+ETIS Risk Scoring -- Threshold Calibration Report
+Validation rows scored: 12714 (0 errored/skipped)
+
+Legitimate score distribution:
+count    3135.000000
+mean        0.353719
+std         3.017150
+min         0.000000
+25%         0.000000
+50%         0.000000
+75%         0.000000
+max        74.720000
+Name: score, dtype: float64
+
+Phishing score distribution:
+count    9579.000000
+mean        3.276407
+std        10.756909
+min         0.000000
+25%         0.000000
+50%         0.000000
+75%         3.430000
+max        99.970000
+Name: score, dtype: float64
+
+Recommended LOW threshold:  <= 0
+Recommended HIGH threshold: >= 0
+
+Bucket composition:
+label   legitimate  phishing
+bucket                      
+HIGH           209      3137
+LOW           2926      6442
+
+CAVEAT: blacklist_entries was seeded from the full PhishTank/OpenPhish
+feeds, not just the training split, so some validation-split phishing
+URLs are themselves already in the blacklist. This inflates their scores
+via exact-match rather than genuine generalization -- see module docstring.
+
+Top 5 highest-scoring LEGITIMATE examples (candidate false positives):
+                                                                                                                                    text content_type  score
+عميلنا العزيز، كشف حسابك الشهري في بنك CIB أصبح متاحا الآن عبر تطبيق CIB Smart Wallet أو الإنترنت البنكي. للاستفسار يرجى زيارة أقرب فرع.        email  74.72
+                                                                                           يجب أن أرسل هذا exe إلى معرف البريد الخاص بك.         text  64.38
+                       فوري: إيصال دفع إلكتروني - تم سداد فاتورة المياه بقيمة 120 جنيه بنجاح بتاريخ 14/7/2026. احتفظ بهذا الإيصال كمرجع.        email  56.67
+                                                                                                                      https://google.com          url  48.57
+                                                                               يمكنك الحصول على رسائل الموافقة المسبقة عن علم على هاتفك؟         text  45.41
+
+Bottom 5 lowest-scoring PHISHING examples (candidate false negatives):
+                                                            text content_type  score
+https://allegrolokalnie.pl-5878761824523.lol/oferta/l/-130425072          url    0.0
+                                     https://gnbserv.weebly.com/          url    0.0
+                                   https://ntx-juisq.wasmer.app/          url    0.0
+                           https://iakzm-4754.twil.io/9302093029          url    0.0
+                  https://learn-cdnexodsu.wixstudio.com/en-start          url    0.0

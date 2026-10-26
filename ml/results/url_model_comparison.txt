@@ -1,0 +1,117 @@
+ETIS URL model comparison (host-grouped split)
+train=63,645  val=13,639  test=13,639  (test phishing=9,491)
+
+== Dataset shortcut check: share of URLs that carry a path ==
+  train legitimate    29.3%   (n=19,373)
+  train phishing      66.2%   (n=44,272)
+  val   legitimate    29.2%   (n=4,150)
+  val   phishing      65.8%   (n=9,489)
+  test  legitimate    29.4%   (n=4,148)
+  test  phishing      65.4%   (n=9,491)
+  -> if legitimate is ~0% and phishing is high, *_full models can cheat on the path;
+     compare them with the *_hostonly models.
+
+== Validation (selection + threshold tuning) ==
+model                val ROC-AUC  threshold  note
+char_lr_full              0.9921      0.431  C=10.0
+char_lr_hostonly          0.9722      0.469  C=10.0
+lgbm_lex_full             0.9947      0.660  400 trees
+lgbm_lex_hostonly         0.9691      0.443  400 trees
+ensemble_full             0.9968      0.484  mean of char_lr_full + lgbm_lex_full
+
+SELECTED on validation ROC-AUC: ensemble_full
+
+== Test (thresholds from validation) ==
+
+-- all test URLs  (n=13,639, phishing=9,491) --
+model                 ROC-AUC   PR-AUC   recall      FPR  precision
+char_lr_full           0.9937   0.9974   0.9726   0.0514     0.9774
+char_lr_hostonly       0.9760   0.9907   0.9172   0.0501     0.9767
+lgbm_lex_full          0.9947   0.9978   0.9619   0.0316     0.9859
+lgbm_lex_hostonly      0.9651   0.9865   0.9162   0.0805     0.9630
+ensemble_full          0.9971   0.9988   0.9847   0.0398     0.9827  <- selected
+
+-- UNSEEN-HOST URLs  (n=9,823, phishing=5,676) --
+model                 ROC-AUC   PR-AUC   recall      FPR  precision
+char_lr_full           0.9895   0.9931   0.9542   0.0514     0.9622
+char_lr_hostonly       0.9603   0.9758   0.8615   0.0499     0.9594
+lgbm_lex_full          0.9916   0.9944   0.9387   0.0316     0.9760
+lgbm_lex_hostonly      0.9456   0.9682   0.8677   0.0803     0.9367
+ensemble_full          0.9952   0.9969   0.9745   0.0398     0.9710  <- selected
+
+-- shared-platform URLs  (n=3,816, phishing=3,815) --
+model                 ROC-AUC   PR-AUC   recall      FPR  precision
+char_lr_full           1.0000   1.0000   1.0000   0.0000     1.0000
+char_lr_hostonly       0.8629   1.0000   1.0000   1.0000     0.9997
+lgbm_lex_full          1.0000   1.0000   0.9963   0.0000     1.0000
+lgbm_lex_hostonly      0.9358   1.0000   0.9885   1.0000     0.9997
+ensemble_full          1.0000   1.0000   1.0000   0.0000     1.0000  <- selected
+
+-- UNSEEN-HOST URLs that HAVE a path (path shortcut cannot decide these)  (n=3,621, phishing=2,402) --
+model                 ROC-AUC   PR-AUC   recall      FPR  precision
+char_lr_full           0.9735   0.9869   0.9446   0.1518     0.9246
+char_lr_hostonly       0.9311   0.9674   0.7598   0.0582     0.9626
+lgbm_lex_full          0.9543   0.9782   0.8755   0.1050     0.9426
+lgbm_lex_hostonly      0.8981   0.9520   0.7723   0.1124     0.9312
+ensemble_full          0.9822   0.9913   0.9575   0.1329     0.9342  <- selected
+
+-- UNSEEN-HOST URLs with NO path (bare host)  (n=6,202, phishing=3,274) --
+model                 ROC-AUC   PR-AUC   recall      FPR  precision
+char_lr_full           0.9933   0.9954   0.9612   0.0096     0.9912
+char_lr_hostonly       0.9830   0.9875   0.9362   0.0464     0.9575
+lgbm_lex_full          0.9983   0.9988   0.9850   0.0010     0.9991
+lgbm_lex_hostonly      0.9783   0.9854   0.9377   0.0669     0.9400
+ensemble_full          0.9981   0.9987   0.9869   0.0010     0.9991  <- selected
+
+== 95% bootstrap CI, UNSEEN-HOST view (1000 resamples) ==
+char_lr_full        ROC-AUC [0.9878, 0.9910]   recall [0.9484, 0.9599]
+char_lr_hostonly    ROC-AUC [0.9568, 0.9637]   recall [0.8528, 0.8702]
+lgbm_lex_full       ROC-AUC [0.9904, 0.9927]   recall [0.9326, 0.9448]
+lgbm_lex_hostonly   ROC-AUC [0.9412, 0.9498]   recall [0.8587, 0.8762]
+ensemble_full       ROC-AUC [0.9942, 0.9961]   recall [0.9703, 0.9785]
+
+== Recall at a fixed FPR (threshold from validation legitimate URLs), test ==
+
+-- UNSEEN-HOST URLs --
+model                target FPR  threshold  test recall  test FPR
+char_lr_full             1.000%      0.885       0.8381    0.0041
+char_lr_full             0.100%      0.993       0.4940    0.0002
+char_lr_hostonly         1.000%      0.860       0.7740    0.0060
+char_lr_hostonly         0.100%      0.996       0.3159    0.0002
+lgbm_lex_full            1.000%      0.892       0.8950    0.0121
+lgbm_lex_full            0.100%      0.992       0.7754    0.0002
+lgbm_lex_hostonly        1.000%      0.978       0.7560    0.0072
+lgbm_lex_hostonly        0.100%      0.998       0.5250    0.0002
+ensemble_full            1.000%      0.666       0.9276    0.0082
+ensemble_full            0.100%      0.983       0.6624    0.0000
+
+-- UNSEEN-HOST URLs that HAVE a path (path shortcut cannot decide these) --
+model                target FPR  threshold  test recall  test FPR
+char_lr_full             1.000%      0.885       0.7664    0.0098
+char_lr_full             0.100%      0.993       0.3897    0.0000
+char_lr_hostonly         1.000%      0.860       0.6253    0.0066
+char_lr_hostonly         0.100%      0.996       0.2132    0.0000
+lgbm_lex_full            1.000%      0.892       0.7756    0.0410
+lgbm_lex_full            0.100%      0.992       0.5795    0.0008
+lgbm_lex_hostonly        1.000%      0.978       0.6228    0.0213
+lgbm_lex_hostonly        0.100%      0.998       0.4496    0.0008
+ensemble_full            1.000%      0.666       0.8793    0.0279
+ensemble_full            0.100%      0.983       0.5112    0.0000
+
+-- UNSEEN-HOST URLs with NO path (bare host) --
+model                target FPR  threshold  test recall  test FPR
+char_lr_full             1.000%      0.885       0.8907    0.0017
+char_lr_full             0.100%      0.993       0.5706    0.0003
+char_lr_hostonly         1.000%      0.860       0.8830    0.0058
+char_lr_hostonly         0.100%      0.996       0.3913    0.0003
+lgbm_lex_full            1.000%      0.892       0.9826    0.0000
+lgbm_lex_full            0.100%      0.992       0.9191    0.0000
+lgbm_lex_hostonly        1.000%      0.978       0.8537    0.0014
+lgbm_lex_hostonly        0.100%      0.998       0.5803    0.0000
+ensemble_full            1.000%      0.666       0.9630    0.0000
+ensemble_full            0.100%      0.983       0.7734    0.0000
+
+Caveat: the legitimate URLs are Tranco top-20k homepages (popular, short, no path).
+A model may partly learn 'is this a famous domain'. Real-world precision on unpopular
+legitimate sites is NOT measured here; add long-tail legitimate URLs with paths before
+claiming it.

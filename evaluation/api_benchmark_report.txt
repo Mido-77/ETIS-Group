@@ -1,0 +1,24 @@
+ETIS -- API Performance Benchmark Report
+Base URL: http://127.0.0.1:8000
+
+=== /analyze sequential latency, by input type ===
+url_only   N=40   errors=0   mean=16.9ms  median=13.2ms  p95=30.7ms  p99=37.7ms  min=9.5ms  max=37.7ms
+text_only  N=40   errors=0   mean=178.6ms  median=173.7ms  p95=211.2ms  p99=220.3ms  min=146.4ms  max=220.3ms
+both       N=40   errors=0   mean=175.7ms  median=173.9ms  p95=209.3ms  p99=221.3ms  min=155.2ms  max=221.3ms
+
+=== Throughput ===
+Sequential: 91.02 req/s (40 requests in 0.4s)
+Concurrent (10 workers): 104.59 req/s (100 requests in 1.0s, 0 non-200 responses)
+
+=== Lighter endpoints ===
+GET /threats: mean=36.5ms  median=32.9ms  p95=51.8ms
+GET /stats: mean=65.7ms  median=64.0ms  p95=78.2ms
+
+=== Resource utilization (server process) ===
+Not measured -- set ETIS_UVICORN_PID env var to the uvicorn process's PID before running, and ensure psutil is installed (pip install psutil), to enable this. Not a blocker for Chapter 5.7 -- response time and throughput are the primary numbers needed there.
+
+======================================================================
+CAVEAT: measured against localhost on local development hardware
+(see Chapter 5.1 hardware spec) -- no network latency, no hosted-
+deployment contention. Do not present as representative of the
+Railway/Render hosted demo without a separate benchmark against it.

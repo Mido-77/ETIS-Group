@@ -1,0 +1,76 @@
+ETIS fusion evaluation (honest, training-split-only blacklist)
+rows scored: 27,828  (errors excluded: 0)
+  URL rows: val=13,639 test=13,639   text rows: val=275 test=275
+Reading the tables: 'recall@1.0% (FPR)' = detection rate when the threshold is set so that
+1% of LEGITIMATE VALIDATION rows are flagged; the (FPR) next to it is what actually happened on
+TEST. If that FPR is far above the target, the candidate cannot reach that false-positive rate
+(many tied scores, e.g. the current system gives most legitimate rows exactly 0).
+
+-- URLs, TEST: verdicts of the CURRENT system (deployed thresholds, honest blacklist) --
+                   LOW  MEDIUM    HIGH   (row %)
+phishing         67.8%   31.4%    0.8%   (n=9,491)
+legitimate       93.4%    6.6%    0.0%   (n=4,148)
+
+URL additive: url-model points X chosen on validation (recall at 1% FPR) = 40
+
+================ URL submissions: thresholds chosen on validation ================
+
+-- URLs, TEST, all  (n=13,639, phishing=9,491) --
+candidate                       AUC   recall@1.0%   (FPR)   recall@0.1%   (FPR)
+legacy_current                0.630         0.322   0.066         0.022   0.000
+url_model_alone               0.997         0.956   0.008         0.772   0.000
+additive (+URL 40)            0.997         0.957   0.010         0.733   0.000
+decision_tiers                0.997         0.956   0.008         0.772   0.000
+
+-- URLs, TEST, UNSEEN-HOST  (n=9,823, phishing=5,676) --
+candidate                       AUC   recall@1.0%   (FPR)   recall@0.1%   (FPR)
+legacy_current                0.598         0.260   0.066         0.000   0.000
+url_model_alone               0.995         0.928   0.008         0.662   0.000
+additive (+URL 40)            0.995         0.929   0.010         0.599   0.000
+decision_tiers                0.995         0.928   0.008         0.662   0.000
+
+-- URLs, TEST, UNSEEN-HOST that have a path  (n=3,621, phishing=2,402) --
+candidate                       AUC   recall@1.0%   (FPR)   recall@0.1%   (FPR)
+legacy_current                0.551         0.301   0.215         0.000   0.000
+url_model_alone               0.982         0.879   0.028         0.511   0.000
+additive (+URL 40)            0.981         0.881   0.032         0.482   0.000
+decision_tiers                0.982         0.879   0.028         0.511   0.000
+
+-- URLs, TEST, UNSEEN-HOST (fixed, design-time operating points) --
+operating point                                recall      FPR
+legacy_current: MEDIUM or HIGH (score > 0)      0.260    0.066
+legacy_current: HIGH (score > 50)               0.000    0.000
+decision_tiers: MEDIUM or HIGH                  0.928    0.010
+decision_tiers: HIGH                            0.662    0.000
+
+Bootstrap 95% CI of ROC-AUC, UNSEEN-HOST URLs:
+  legacy_current              [0.5910, 0.6048]
+  url_model_alone             [0.9942, 0.9961]
+  additive (+URL 40)          [0.9938, 0.9957]
+  decision_tiers              [0.9941, 0.9960]
+
+-- TEXT, TEST: verdicts of the CURRENT system --
+                   LOW  MEDIUM    HIGH   (row %)
+phishing          0.0%   14.6%   85.4%   (n=82)
+legitimate        0.0%   99.0%    1.0%   (n=193)
+
+Text additive: rule points R (text model fixed at 45) chosen on validation = 15
+
+================ Text submissions: thresholds chosen on validation ================
+
+-- TEXT, TEST, all  (n=275, phishing=82) --
+candidate                       AUC   recall@5.0%   (FPR)   recall@1.0%   (FPR)
+legacy_current                0.974         0.939   0.047         0.659   0.005
+text_char_alone               0.996         0.963   0.057         0.841   0.000
+additive (rule 15)            0.996         0.963   0.057         0.854   0.000
+decision_tiers                0.996         0.963   0.057         0.841   0.000
+
+-- TEXT, TEST (fixed, design-time operating points) --
+operating point                                recall      FPR
+legacy_current: MEDIUM or HIGH (score > 0)      1.000    1.000
+legacy_current: HIGH (score > 50)               0.854    0.010
+decision_tiers: MEDIUM or HIGH                  0.963    0.062
+decision_tiers: HIGH                            0.841    0.000
+
+(text tier thresholds from validation: HIGH p >= 0.784 (1% FPR), MEDIUM p >= 0.252 (5% FPR))
+(text test set is small: 193 legitimate rows, so 1% FPR means about 2 message)

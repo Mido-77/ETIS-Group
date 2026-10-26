@@ -1,0 +1,17 @@
+ETIS -- scored on the SAME 200-URL sample used for the VirusTotal comparison
+(100 phishing + 100 legitimate, seed=42)
+
+Accuracy:  1.0000
+Precision: 1.0000
+Recall:    1.0000
+F1:        1.0000
+ROC-AUC:   1.0000
+
+Confusion matrix [[TN,FP],[FN,TP]]:
+[[100   0]
+ [  0 100]]
+
+This is a same-N companion to the full-test-set ETIS numbers in
+evaluation/test_configuration_report.txt (N=13,003) -- use THIS
+row specifically when comparing against VirusTotal's 200-URL
+sample, and the full-test-set numbers everywhere else (Table 5.1).

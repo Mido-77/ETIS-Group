@@ -1,0 +1,55 @@
+ETIS Risk Scoring -- Threshold Calibration Report
+Validation rows scored: 13005 (0 errored/skipped)
+
+Legitimate score distribution:
+count    3147.000000
+mean        0.460988
+std         3.702289
+min         0.000000
+25%         0.000000
+50%         0.000000
+75%         0.000000
+max        62.780000
+Name: score, dtype: float64
+
+Phishing score distribution:
+count    9858.000000
+mean       53.010795
+std         3.492378
+min        15.140000
+25%        51.430000
+50%        51.430000
+75%        54.860000
+max        94.690000
+Name: score, dtype: float64
+
+Recommended LOW threshold:  <= 0
+Recommended HIGH threshold: >= 51
+
+Bucket composition:
+label   legitimate  phishing
+bucket                      
+HIGH             4      9856
+LOW           2916         0
+MEDIUM         227         2
+
+CAVEAT: blacklist_entries was seeded from the full PhishTank/OpenPhish
+feeds, not just the training split, so some validation-split phishing
+URLs are themselves already in the blacklist. This inflates their scores
+via exact-match rather than genuine generalization -- see module docstring.
+
+Top 5 highest-scoring LEGITIMATE examples (candidate false positives):
+                                                                                                                                                text content_type  score
+لقد كنت أبحث عن الكلمات المناسبة لأشكرك على هذا الاستراحة. أعدك بأنني لن آخذ مساعدتك كأمر مسلم به وسأفي بوعدي. لقد كنت رائعًا ونعمة في جميع الأوقات.         text  62.78
+                                                                        لقد أرسلت لك بريدًا إلكترونيًا للتو - إلى عنوان به incomm فيه ، هل هذا صحيح؟         text  61.99
+                                             بالتأكيد ، إذا تلقيت إقرارًا منك بأنه من غير اللباقة بشكل مذهل ومن العبث عمومًا المطالبة بأداء قسم الدم         text  59.87
+ الأهلي المصري: تنويه توعوي - احذروا الرسائل التي تدعي فوزكم بجوائز أو تطلب تحديث بياناتكم عبر روابط. تواصلوا معنا فقط عبر الخط الساخن الرسمي 19623.        email  55.03
+                                                                                                                                           شكراً لك!         text  42.39
+
+Bottom 5 lowest-scoring PHISHING examples (candidate false negatives):
+                                                                                                                 text content_type  score
+                                                    تنزيلات ردتاغ 20% الى 50% اكتشفوا التشكيلة https://bit.ly/2HbHZJu         text  15.14
+تعبت من الضرب؟\nابحث عن شيء حقيقي يدوم!\nابدأ مجانًا على موقع المواعدة الموثوق به رقم 1.\nالبحث عن المباراة الخاصة بي         text  32.77
+                                                                                      https://effulgentd.netlify.app/          url  51.43
+                                                                                        https://ntx-juisq.wasmer.app/          url  51.43
+                                                                                https://iakzm-4754.twil.io/9302093029          url  51.43

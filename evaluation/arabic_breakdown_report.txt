@@ -1,0 +1,19 @@
+ETIS -- Arabic/Mixed/English Breakdown Report (Test Split, Text/Email Subset)
+
+=== Arabic (ar) ===
+  lstm    N=251  (phishing=67, legitimate=184)  acc=0.9522  prec=0.8986  rec=0.9254  f1=0.9118  roc_auc=0.9559
+  hybrid  N=251  (phishing=67, legitimate=184)  acc=0.9562  prec=0.9118  rec=0.9254  f1=0.9185  roc_auc=0.9605
+
+=== Mixed (mixed) ===
+  lstm    N=50   (phishing=25, legitimate=25)  acc=1.0000  prec=1.0000  rec=1.0000  f1=1.0000  roc_auc=1.0000
+  hybrid  N=50   (phishing=25, legitimate=25)  acc=1.0000  prec=1.0000  rec=1.0000  f1=1.0000  roc_auc=1.0000
+
+=== English (en) ===
+  lstm: no rows
+  hybrid: no rows
+
+======================================================================
+CAVEAT: the English bucket is expected to have a very small N (per Table
+3.2, only 2 of 1,996 text rows are English) -- treat any English-bucket
+numbers as illustrative only, not as evidence of an English/Arabic gap.
+Do not report English-bucket ROC-AUC if it printed as n/a above.

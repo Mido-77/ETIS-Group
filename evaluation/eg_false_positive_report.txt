@@ -1,0 +1,40 @@
+ETIS false-positive measurement on real Egyptian sites (final system, etis_eval)
+git HEAD: 2b3301e93673d70d2c036dce22a00708c61ffe5a; scoring errors excluded: 0; allowlist-overridden rows excluded from rates: 33
+'flagged' = MEDIUM or HIGH. Wilson 95% intervals. URLs of one domain are not independent: read the DOMAIN column first.
+ASSUMPTION: these URLs are legitimate. Check every flagged URL by hand before quoting a rate (see the end).
+
+== 1. DATASET: legitimate .eg URLs in the TEST split (hosts unseen by the models; shared platforms excluded) ==
+by URL type:
+  URL type              URLs >= MEDIUM  [95% CI]                      URLs = HIGH                   DOMAINS with >= 1 flagged URL
+  with_path               0.0% [ 0.0,   1.7]  (0/222)                   0.0% [ 0.0,   1.7]  (0/222)   0.0% [ 0.0,  10.7]  (0/32)
+by dataset source (descriptive):
+  crawl_legit_paths       0.0% [ 0.0,   1.7]  (0/222)
+
+== 2. EXTERNAL Tranco .eg domains absent from the dataset, by popularity band; PRIMARY: apex form (https://domain) ==
+by Tranco rank band:
+  band                  URLs >= MEDIUM  [95% CI]                      URLs = HIGH                   DOMAINS with >= 1 flagged URL
+  A_top_100k              5.0% [ 0.9,  23.6]  (1/20)                    0.0% [ 0.0,  16.1]  (0/20)    5.0% [ 0.9,  23.6]  (1/20)
+  B_100k_500k             0.0% [ 0.0,   4.8]  (0/77)                    0.0% [ 0.0,   4.8]  (0/77)    0.0% [ 0.0,   4.8]  (0/77)
+  C_500k_1M               2.8% [ 0.8,   9.7]  (2/71)                    0.0% [ 0.0,   5.1]  (0/71)    2.8% [ 0.8,   9.7]  (2/71)
+
+== 2. EXTERNAL Tranco .eg domains absent from the dataset, by popularity band; SECONDARY: www form (https://www.domain) ==
+by Tranco rank band:
+  band                  URLs >= MEDIUM  [95% CI]                      URLs = HIGH                   DOMAINS with >= 1 flagged URL
+  A_top_100k              5.0% [ 0.9,  23.6]  (1/20)                    0.0% [ 0.0,  16.1]  (0/20)    5.0% [ 0.9,  23.6]  (1/20)
+  B_100k_500k             0.0% [ 0.0,   4.8]  (0/77)                    0.0% [ 0.0,   4.8]  (0/77)    0.0% [ 0.0,   4.8]  (0/77)
+  C_500k_1M               2.8% [ 0.8,   9.7]  (2/71)                    0.0% [ 0.0,   5.1]  (0/71)    2.8% [ 0.8,   9.7]  (2/71)
+
+== Flagged URLs: CHECK EACH BY HAND (6); decided_by counts: {'rule_based': 6} ==
+  MEDIUM rule_based external A_top_100k    https://baidu.com.eg
+  MEDIUM rule_based external A_top_100k    https://www.baidu.com.eg
+  MEDIUM rule_based external C_500k_1M     https://bee.com.eg
+  MEDIUM rule_based external C_500k_1M     https://www.bee.com.eg
+  MEDIUM rule_based external C_500k_1M     https://digilians.gov.eg
+  MEDIUM rule_based external C_500k_1M     https://www.digilians.gov.eg
+
+How to use this
+ - Quote rates per URL type and per band with their intervals and the domain-level column, never one pooled number.
+ - The dataset section is biased to well-known sites (Tranco top-20k + crawled pages); the external section covers obscure
+   domains but only homepage-style URLs. Paths on obscure sites are not measured.
+ - Before quoting: inspect each flagged URL. Any that prove malicious are not false positives; say how many and why.
+ - Do not tune thresholds/rules on this report; measure any mitigation on a fresh sample.

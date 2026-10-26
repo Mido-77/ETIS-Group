@@ -1,0 +1,24 @@
+TF-IDF + LightGBM baseline
+
+-- Validation --
+Accuracy:  0.9470
+Precision: 0.9750
+Recall:    0.8478
+F1:        0.9070
+ROC-AUC:   0.9630
+
+-- Test --
+Accuracy:  0.9003
+Precision: 0.8875
+Recall:    0.7717
+F1:        0.8256
+ROC-AUC:   0.9493
+
+              precision    recall  f1-score   support
+
+  legitimate       0.90      0.96      0.93       209
+    phishing       0.89      0.77      0.83        92
+
+    accuracy                           0.90       301
+   macro avg       0.90      0.86      0.88       301
+weighted avg       0.90      0.90      0.90       301

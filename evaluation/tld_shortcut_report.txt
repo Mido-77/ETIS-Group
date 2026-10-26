@@ -1,0 +1,26 @@
+TLD-shortcut diagnostic: re-scoring unseen-host test URLs with the last host label swapped
+sample: 300 phishing + 300 legitimate URLs scored in all three forms; URLs dropped for scoring errors: 0
+swap_eg = last label -> 'eg'; swap_net = last label -> 'net' (control). Wilson 95% intervals.
+The swapped URLs are SYNTHETIC; this measures the model's sensitivity, not real .eg phishing.
+Hosts already ending in .eg or .net are not sampled (they cannot take both swaps); only the LAST host label changes (x.co.uk -> x.co.eg).
+
+== URL model tier alone: share flagged (MEDIUM or HIGH) ==
+class       variant   URL model MEDIUM+                     final verdict MEDIUM+                 median model probability
+phishing    original   93.0% [89.5,  95.4]  (279/300)        93.0% [89.5,  95.4]  (279/300)       0.994   (recall)
+phishing    swap_eg    19.7% [15.6,  24.5]  (59/300)         19.7% [15.6,  24.5]  (59/300)        0.461   (recall)
+phishing    swap_net   85.3% [80.9,  88.9]  (256/300)        85.3% [80.9,  88.9]  (256/300)       0.965   (recall)
+legitimate  original    1.0% [ 0.3,   2.9]  (3/300)           1.0% [ 0.3,   2.9]  (3/300)         0.021   (false-positive rate)
+legitimate  swap_eg     0.0% [ 0.0,   1.3]  (0/300)           0.0% [ 0.0,   1.3]  (0/300)         0.015   (false-positive rate)
+legitimate  swap_net    1.3% [ 0.5,   3.4]  (4/300)           1.3% [ 0.5,   3.4]  (4/300)         0.012   (false-positive rate)
+
+== Paired outcomes, URL model MEDIUM+ (same URLs; exact McNemar on the discordant pairs) ==
+  phishing    original -> swap_eg   flagged both  59   flag LOST 220   flag GAINED   0   neither  21   exact p = 0.0000
+  phishing    original -> swap_net  flagged both 253   flag LOST  26   flag GAINED   3   neither  18   exact p = 0.0000
+  legitimate  original -> swap_eg   flagged both   0   flag LOST   3   flag GAINED   0   neither 297   exact p = 0.2500
+  legitimate  original -> swap_net  flagged both   1   flag LOST   2   flag GAINED   3   neither 294   exact p = 1.0000
+
+How to read it (pre-declared)
+ - Evidence for a TLD shortcut: phishing url_model recall drops by more than 10 points original -> swap_eg with p < 0.01
+   and NOT comparably for swap_net, and/or legitimate false positives vanish for swap_eg but not swap_net.
+ - Anything smaller is 'no evidence at this sample size', not 'no shortcut'. n = 300 per class.
+ - No rule/threshold/model change follows from this; a mitigation must be measured on a fresh sample.

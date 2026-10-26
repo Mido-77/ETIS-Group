@@ -1,0 +1,35 @@
+ETIS -- Test-Split Configuration Comparison Report
+Total test-split rows: 13003
+
+Binary decision threshold for accuracy/precision/recall/F1: score >= 50 -> predicted phishing, applied UNIFORMLY across all four configs (see script docstring for why this differs from the hybrid's calibrated LOW/MEDIUM/HIGH bands).
+
+Config                   N  Accuracy  Precision   Recall      F1  ROC-AUC
+-------------------------------------------------------------------------
+Rule-Based Only      13003    0.2435     0.9167   0.0022  0.0045   0.6520
+Blacklist Only       12702    0.9987     0.9984   1.0000  0.9992   1.0000
+LSTM Only              301    0.9601     0.9255   0.9457  0.9355   0.9639
+Full Hybrid          13003    0.9991     0.9993   0.9995  0.9994   0.9978
+
+Confusion matrices (rows=true, cols=predicted, [[TN,FP],[FN,TP]]):
+
+Rule-Based Only:
+[[3144    2]
+ [9835   22]]
+
+Blacklist Only:
+[[2921   16]
+ [   0 9765]]
+
+LSTM Only:
+[[202   7]
+ [  5  87]]
+
+Full Hybrid:
+[[3139    7]
+ [   5 9852]]
+
+======================================================================
+SCOPE CAVEATS -- include in Chapter 5.3/5.8, do not omit:
+- Blacklist-only and LSTM-only are evaluated on DIFFERENT row subsets (URL rows only / text-email rows only respectively), not the full test set. Rule-based-only and full-hybrid ARE evaluated on the full test set. This table is not a clean apples-to-apples comparison without that caveat.
+- Blacklist-only (and the blacklist component of full-hybrid) shares the same known limitation as threshold calibration: blacklist_entries was seeded from full PhishTank/OpenPhish feeds, not train-split-only, so some test-split phishing URLs may already sit in the blacklist. This inflates blacklist-driven recall via trivial exact-match rather than pure generalization to unseen phishing. Rule-based-only and LSTM-only do not have this issue.
+- Binary threshold (score >= 50) is a plain midpoint split chosen for threshold-neutral comparability across configs, not a calibrated decision boundary for any individual engine -- ROC-AUC is the primary metric that should carry weight in the writeup, not the F1/accuracy numbers in isolation.
